@@ -11,8 +11,6 @@ from .forms import DriverCreationForm, DriverLicenseUpdateForm, CarForm
 
 @login_required
 def index(request):
-    """View function for the home page of the site."""
-
     num_drivers = Driver.objects.count()
     num_cars = Car.objects.count()
     num_manufacturers = Manufacturer.objects.count()
@@ -41,17 +39,32 @@ class ManufacturerCreateView(LoginRequiredMixin, generic.CreateView):
     model = Manufacturer
     fields = "__all__"
     success_url = reverse_lazy("taxi:manufacturer-list")
+    template_name = "taxi/class_form.html"
+
+    def get_context_data(self, **kwargs):
+        kwargs["title"] = "Create manufacturer"
+        return super().get_context_data(**kwargs)
 
 
 class ManufacturerUpdateView(LoginRequiredMixin, generic.UpdateView):
     model = Manufacturer
     fields = "__all__"
     success_url = reverse_lazy("taxi:manufacturer-list")
+    template_name = "taxi/class_form.html"
+
+    def get_context_data(self, **kwargs):
+        kwargs["title"] = "Update manufacturer"
+        return super().get_context_data(**kwargs)
 
 
 class ManufacturerDeleteView(LoginRequiredMixin, generic.DeleteView):
     model = Manufacturer
     success_url = reverse_lazy("taxi:manufacturer-list")
+    template_name = "taxi/class_confirm_delete.html"
+
+    def get_context_data(self, **kwargs):
+        kwargs["class_name"] = "manufacturer"
+        return super().get_context_data(**kwargs)
 
 
 class CarListView(LoginRequiredMixin, generic.ListView):
@@ -68,17 +81,32 @@ class CarCreateView(LoginRequiredMixin, generic.CreateView):
     model = Car
     form_class = CarForm
     success_url = reverse_lazy("taxi:car-list")
+    template_name = "taxi/class_form.html"
+
+    def get_context_data(self, **kwargs):
+        kwargs["title"] = "Create car"
+        return super().get_context_data(**kwargs)
 
 
 class CarUpdateView(LoginRequiredMixin, generic.UpdateView):
     model = Car
     form_class = CarForm
     success_url = reverse_lazy("taxi:car-list")
+    template_name = "taxi/class_form.html"
+
+    def get_context_data(self, **kwargs):
+        kwargs["title"] = "Update car"
+        return super().get_context_data(**kwargs)
 
 
 class CarDeleteView(LoginRequiredMixin, generic.DeleteView):
     model = Car
     success_url = reverse_lazy("taxi:car-list")
+    template_name = "taxi/class_confirm_delete.html"
+
+    def get_context_data(self, **kwargs):
+        kwargs["class_name"] = "car"
+        return super().get_context_data(**kwargs)
 
 
 class DriverListView(LoginRequiredMixin, generic.ListView):
@@ -94,17 +122,32 @@ class DriverDetailView(LoginRequiredMixin, generic.DetailView):
 class DriverCreateView(LoginRequiredMixin, generic.CreateView):
     model = Driver
     form_class = DriverCreationForm
+    template_name = "taxi/class_form.html"
+
+    def get_context_data(self, **kwargs):
+        kwargs["title"] = "Create driver"
+        return super().get_context_data(**kwargs)
 
 
 class DriverLicenseUpdateView(LoginRequiredMixin, generic.UpdateView):
     model = Driver
     form_class = DriverLicenseUpdateForm
     success_url = reverse_lazy("taxi:driver-list")
+    template_name = "taxi/class_form.html"
+
+    def get_context_data(self, **kwargs):
+        kwargs["title"] = "Update driver license"
+        return super().get_context_data(**kwargs)
 
 
 class DriverDeleteView(LoginRequiredMixin, generic.DeleteView):
     model = Driver
     success_url = reverse_lazy("taxi:driver-list")
+    template_name = "taxi/class_confirm_delete.html"
+
+    def get_context_data(self, **kwargs):
+        kwargs["class_name"] = "driver"
+        return super().get_context_data(**kwargs)
 
 
 class ToggleAssignToCarView(LoginRequiredMixin, View):
